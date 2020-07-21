@@ -46,3 +46,16 @@ body {
   padding: 6px;
   color: #204963;
 }
+
+.friends-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.friends-list .friend {
+  width: 45%;
+}
+
+.inputs {
+  margin: 0 auto; 
+}

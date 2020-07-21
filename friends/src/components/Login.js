@@ -17,7 +17,7 @@ const Login = (props) => {
   };
 
   const attemptLogin = (e) => {
-    {e && e.preventDefault();}
+    e.preventDefault();
     setIsLoading(true);
     axiosWithAuth()
       .post("/api/login", credentials)
