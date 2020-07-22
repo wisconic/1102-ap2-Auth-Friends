@@ -56,6 +56,15 @@ body {
   width: 45%;
 }
 
-.inputs {
-  margin: 0 auto; 
+.FriendForm {
+  margin: 2% 0;
+}
+
+.addFriend-form {
+  display: flex;
+  justify-content: space-around;
+}
+
+.addFriend-form > button:hover {
+  cursor: pointer;
 }

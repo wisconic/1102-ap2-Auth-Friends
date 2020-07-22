@@ -1,47 +1,64 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FriendsContext } from "../contexts/FriendsContext";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const FriendForm = () => {
-  const [newFriendInput, setNewFriendInput] = useState({
-    name: "",
-    age: "",
-    email: "",
-  });
-  const { newFriend, addFriend } = useContext(FriendsContext);
+  const blankForm = { name: "", age: "", email: "" };
+  const [newFriend, setNewFriend] = useState(blankForm);
+  const { setFriends } = useContext(FriendsContext);
 
   const handleChange = (e) => {
-    setNewFriendInput({
-      ...newFriendInput,
+    setNewFriend({
+      ...newFriend,
       [e.target.name]: e.target.value,
     });
   };
+  const addFriend = (e) => {
+    e.preventDefault();
+    console.log("addFriend -> newFriend: ", newFriend);
+    axiosWithAuth()
+      .post("/api/friends", newFriend)
+      .then((res) => {
+        console.log("addFriend -> res.data", res.data);
+        setFriends(res.data);
+        setNewFriend(blankForm);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  
+  console.log("render FriendForm with", newFriend);
 
   return (
-    <form onSubmit={addFriend}>
-      <h1>Add User</h1>
-      <input
-        type='text'
-        placeholder='Name'
-        name='name'
-        value={newFriendInput.name}
-        onChange={handleChange}
-      />
-      <input
-        type='text'
-        placeholder='Age'
-        name='age'
-        value={newFriendInput.age}
-        onChange={handleChange}
-      />
-      <input
-        type='email'
-        placeholder='Email'
-        name='email'
-        value={newFriendInput.email}
-        onChange={handleChange}
-      />
-      <button type='submit'>Add</button>
-    </form>
+    <div className='FriendForm'>
+      <h1>Add Friend</h1>
+      <form onSubmit={addFriend} className='addFriend-form'>
+        <input
+          type='text'
+          placeholder='Name'
+          name='name'
+          value={newFriend.name}
+          onChange={handleChange}
+        />
+        <input
+          type='text'
+          placeholder='Age'
+          name='age'
+          value={newFriend.age}
+          onChange={handleChange}
+        />
+        <input
+          type='email'
+          placeholder='Email'
+          name='email'
+          value={newFriend.email}
+          onChange={handleChange}
+        />
+
+        <button type='submit'>Add</button>
+      </form>
+    </div>
   );
 };
 export default FriendForm;
