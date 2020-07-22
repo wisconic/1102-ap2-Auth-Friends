@@ -3,6 +3,7 @@ import { FriendsContext } from "../contexts/FriendsContext";
 
 const FriendsList = () => {
   const { friends } = useContext(FriendsContext);
+  console.log("render FriendsList with: ", friends);
   return (
     <div className='container'>
       <h1>Friends</h1>
