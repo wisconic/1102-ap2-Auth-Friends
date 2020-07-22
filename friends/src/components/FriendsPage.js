@@ -20,16 +20,15 @@ const FriendsPage = () => {
   };
 
   useEffect(() => {
-    console.log('FriendsPage mount --> getFriends()')
+    console.log("FriendsPage mount --> getFriends()");
     getFriends();
   }, []);
 
   return (
-    <FriendsContext.Provider
-      value={{ friends, setFriends }}
-    >
+    <FriendsContext.Provider value={{ friends, setFriends }}>
       <div className='container'>
         <h2>Friends Page (protected)</h2>
+        <p>total known friends: {friends.length}</p>
         <FriendForm />
         <FriendsList />
       </div>

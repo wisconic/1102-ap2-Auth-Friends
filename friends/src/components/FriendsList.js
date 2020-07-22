@@ -9,11 +9,11 @@ const FriendsList = () => {
       <h1>Friends</h1>
       {friends.length !== 0 ? (
         <div className='friends-list'>
-          {friends.map((f) => (
-            <div key={f.id} className='friend container'>
-              <h3>Name: {f.name}</h3>
-              <p>Email: {f.email}</p>
-              <p>Age: {f.age}</p>
+          {friends.map((friend) => (
+            <div key={friend.id} className='friend container'>
+              <h3>Name: {friend.name}</h3>
+              <p>Email: {friend.email}</p>
+              <p>Age: {friend.age}</p>
             </div>
           ))}
         </div>

@@ -1,62 +1,50 @@
 import React, { useContext, useState } from "react";
+import { useForm } from "react-hook-form";
+
 import { FriendsContext } from "../contexts/FriendsContext";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const FriendForm = () => {
-  const blankForm = { name: "", age: "", email: "" };
-  const [newFriend, setNewFriend] = useState(blankForm);
+  const { register, handleSubmit, reset } = useForm();
   const { setFriends } = useContext(FriendsContext);
 
-  const handleChange = (e) => {
-    setNewFriend({
-      ...newFriend,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const addFriend = (e) => {
-    e.preventDefault();
-    console.log("addFriend -> newFriend: ", newFriend);
+  const addFriend = (values) => {
+    console.log("addFriend -> newFriend: ", values);
     axiosWithAuth()
-      .post("/api/friends", newFriend)
+      .post("/api/friends", values)
       .then((res) => {
         console.log("addFriend -> res.data", res.data);
         setFriends(res.data);
-        setNewFriend(blankForm);
+        reset();
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  
-  console.log("render FriendForm with", newFriend);
 
   return (
     <div className='FriendForm'>
       <h1>Add Friend</h1>
-      <form onSubmit={addFriend} className='addFriend-form'>
+      <form onSubmit={handleSubmit(addFriend)} className='addFriend-form'>
         <input
           type='text'
           placeholder='Name'
           name='name'
-          value={newFriend.name}
-          onChange={handleChange}
+          ref={register({ required: true })}
         />
         <input
           type='text'
           placeholder='Age'
           name='age'
-          value={newFriend.age}
-          onChange={handleChange}
+          ref={register({ required: true })}
         />
         <input
           type='email'
           placeholder='Email'
           name='email'
-          value={newFriend.email}
-          onChange={handleChange}
+          ref={register({ required: true })}
         />
-
-        <button type='submit'>Add</button>
+        <input type='submit' />
       </form>
     </div>
   );

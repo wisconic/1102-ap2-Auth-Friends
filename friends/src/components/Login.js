@@ -1,26 +1,19 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const Login = (props) => {
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-  });
+  // react-hook-form sets everything up for you
+  const { register, handleSubmit } = useForm();
+
+  // created by me --> used to render other messages to improve UX
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleChanges = (e) => {
-    setCredentials({
-      ...credentials,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const attemptLogin = (e) => {
-    e.preventDefault();
+  const attemptLogin = ({ username, password }) => {
     setIsLoading(true);
     axiosWithAuth()
-      .post("/api/login", credentials)
+      .post("/api/login", { username, password })
       .then((res) => {
         setTimeout(() => {
           setIsLoading(false);
@@ -34,8 +27,8 @@ const Login = (props) => {
         console.log(err);
         setError("Invalid Credentials");
       });
-    setCredentials({});
   };
+
 
   return (
     <div className='container'>
@@ -43,22 +36,21 @@ const Login = (props) => {
       {isLoading ? (
         <h1>Loading</h1>
       ) : (
-        <form onSubmit={attemptLogin}>
+          // react-hook-form does validation in handleSubmit before attemptLogin
+        <form onSubmit={handleSubmit(attemptLogin)}>
           <input
             type='text'
             name='username'
             placeholder='lambda'
-            value={credentials.username}
-            onChange={handleChanges}
+            ref={register({ required: true })}
           />
           <input
             type='password'
             name='password'
             placeholder='school'
-            value={credentials.password}
-            onChange={handleChanges}
+            ref={register({ required: true })}
           />
-          <button>Log in</button>
+          <input type='submit' />
         </form>
       )}
     </div>
