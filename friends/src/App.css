@@ -1,0 +1,70 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-size: 62.5%;
+  line-height: 1.4;
+}
+
+.container {
+  margin: 4% 2%;
+  padding: 4%;
+
+  border: 1px solid rgb(210, 210, 210);
+  border-radius: 6px;
+  box-shadow: 0px 1px 6px -2px rgb(128, 127, 127);
+
+  background-color: white;
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f6e7f7;
+}
+.nav-bar h1 {
+  padding: 2%;
+}
+.nav-bar > ul {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 6%;
+  padding: 2%;
+}
+
+.nav-bar li {
+  list-style: none;
+  margin-right: 6px;
+  color: #204963;
+}
+
+.nav-bar a {
+  text-decoration: none;
+  padding: 6px;
+  color: #204963;
+}
+
+.friends-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.friends-list .friend {
+  width: 45%;
+}
+
+.FriendForm {
+  margin: 2% 0;
+}
+
+.addFriend-form {
+  display: flex;
+  justify-content: space-around;
+}
+
+.addFriend-form > button:hover {
+  cursor: pointer;
+}
